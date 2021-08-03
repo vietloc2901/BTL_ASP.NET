@@ -12,7 +12,7 @@
             <ul class="d-flex align-items-center">
                 <li>@Html.ActionLink("Trang chủ", "Index", "Home")</li>
                 <li>@Html.ActionLink("Cửa hàng", "Shop", "Product")</li>
-                <li class="active">@Html.ActionLink(Model.TenSP, "ProductDetail", "Product", new { id = Model.MaSP })</li>
+                <li class="active">@Html.ActionLink(Model.TenSP, "ProductDetail", "Product",new { id = Model.MaSP },new { })</li>
             </ul>
         </div>
     </div>
@@ -62,19 +62,19 @@
                     <div class="box-quantity d-flex hot-product2">
 
                         <form action="#">
-                            <input class="quantity mr-15" type="number" min="1" value="1">
+                            <input class="quantity mr-15" id="modal-soluong" type="number" min="1" value="1">
                         </form>
                         <div class="pro-actions">
                             @if (ViewBag.Exitst.SoLuong > 0)
                             {
                                 <div class="actions-primary">
-                                    <button id="order-text" class="add-cart" title="" data-original-title="Thêm" style="margin-top: 0;"> Thêm vào giỏ</button>
+                                    <button id="order-text" type="button" onclick="themVaoGioHang()" class="add-cart" title="" data-original-title="Thêm" style="margin-top: 0;"> Thêm vào giỏ</button>
                                 </div>
                             }
                             @if (ViewBag.Exitst.SoLuong == 0)
                             {
                                 <div class="actions-primary">
-                                    <button id="order-text" class="add-cart" title="" data-original-title="Thêm" disabled style="margin-top: 0;">Hết hàng! Hãy chọn kích cỡ khác</button>
+                                    <button id="order-text" type="button" onclick="themVaoGioHang()" class="add-cart" title="" data-original-title="Thêm" disabled style="margin-top: 0;">Hết hàng! Hãy chọn kích cỡ khác</button>
                                 </div>
                             }
                         </div>

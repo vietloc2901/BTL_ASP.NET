@@ -15,6 +15,11 @@ namespace Nhom9.Areas.Admin.Controllers
         // GET: Admin/AdminUser
         public ActionResult Index(string searchString, int page = 1, int pageSize = 5)
         {
+            TaiKhoanQuanTri ses = (TaiKhoanQuanTri)Session[Nhom9.Session.ConstaintUser.ADMIN_SESSION];
+            if(ses.LoaiTaiKhoan == false)
+            {
+                return RedirectToAction("Index", "Home");
+            }
             ViewBag.searchString = searchString;
             var taikhoans = db.TaiKhoanQuanTris.Select(tk => tk);
             if (!String.IsNullOrEmpty(searchString))
@@ -58,9 +63,14 @@ namespace Nhom9.Areas.Admin.Controllers
         [HttpPost]
         public JsonResult Update(TaiKhoanQuanTri tk)
         {
+            TaiKhoanQuanTri login = (TaiKhoanQuanTri)Session[Nhom9.Session.ConstaintUser.ADMIN_SESSION];
             try
             {
                 TaiKhoanQuanTri update = db.TaiKhoanQuanTris.Where(a => a.ID.Equals(tk.ID)).FirstOrDefault();
+                if (update.TenDangNhap.Equals(login.TenDangNhap))
+                {
+                    return Json(new { status = false, message = "Bạn không thể sửa tài khoản này !" });
+                }
                 update.LoaiTaiKhoan = tk.LoaiTaiKhoan;
                 update.TrangThai = tk.TrangThai;
                 db.Entry(update).State = EntityState.Modified;
@@ -76,9 +86,14 @@ namespace Nhom9.Areas.Admin.Controllers
         [HttpPost]
         public JsonResult Delete(int id)
         {
+            TaiKhoanQuanTri login = (TaiKhoanQuanTri)Session[Nhom9.Session.ConstaintUser.ADMIN_SESSION];
             try
             {
                 TaiKhoanQuanTri tk = db.TaiKhoanQuanTris.Where(a => a.ID.Equals(id)).FirstOrDefault();
+                if (tk.TenDangNhap.Equals(login.TenDangNhap))
+                {
+                    return Json(new { status = false, message = "Bạn không thể xóa tài khoản này !" });
+                }
                 db.TaiKhoanQuanTris.Remove(tk);
                 db.SaveChanges();
                 return Json(new { status = true });

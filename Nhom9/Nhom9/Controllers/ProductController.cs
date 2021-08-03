@@ -15,6 +15,7 @@ namespace Nhom9.Controllers
         public ActionResult Shop(string searchString, int? madm, int page = 1, int pageSize = 9)
         {
             ViewBag.searchString = searchString;
+            ViewBag.madm = madm;
             var sanphams = db.SanPhams.Select(p => p);
             if (!String.IsNullOrEmpty(searchString))
             {
@@ -23,6 +24,7 @@ namespace Nhom9.Controllers
             if (madm != null && madm != 0)
             {
                 sanphams = sanphams.Where(s => s.MaDM == madm);
+                ViewBag.DanhMuc = db.DanhMucs.Where(d => d.MaDM == madm).FirstOrDefault();
             }
             return View(sanphams.OrderBy(sp => sp.MaSP).ToPagedList(page, pageSize));
         }

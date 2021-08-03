@@ -55,6 +55,21 @@ Version: 1.0;
 /* 1. Theme Default CSS
 /*----------------------------------------*/
 
+.product-count {
+    background: none repeat scroll 0 0 #e62e04 !important;
+    border-radius: 50% !important;
+    color: #fff !important;
+    display: inline-block !important;
+    font-size: 10px !important;
+    height: 25px !important;
+    padding-top: 2px !important;
+    position: absolute !important;
+    right: -10px !important;
+    text-align: center !important;
+    top: -10px !important;
+    width: 20px !important;
+}
+
  /* Customstyle */
  h2 {
     font-family: monospace;

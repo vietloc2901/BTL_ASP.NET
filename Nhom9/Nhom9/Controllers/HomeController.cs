@@ -41,6 +41,15 @@ namespace Nhom9.Controllers
             return PartialView(kichCos);
         }
 
+        [ChildActionOnly]
+        public ActionResult CartCount()
+        {
+            List<ChiTietHoaDon> list = new List<ChiTietHoaDon>();
+            list = (List<ChiTietHoaDon>)Session[Nhom9.Session.ConstainCart.CART];
+            return PartialView(list);
+        }
+
+
         [HttpGet]
         public ActionResult Login()
         {

@@ -15,7 +15,7 @@
             })
             if (response.SanPhamChiTiets[0].SoLuong == 0) {
                 $("#order-text").html("Hết hàng ! Hãy chọn kích cỡ khác");
-                $("#order-text").attr("disabled","disabled");
+                $("#order-text").attr("disabled", "disabled");
             }
         },
         error: function (response) {
@@ -23,10 +23,10 @@
             console.log(xhr.responseText);
             alert("Error has occurred..");
         }
-    });  
+    });
 }
 
-
+//Ajax load số lượng theo size
 $(document).on("change", "#modal-kichco-soluong", function () {
     let id = $(this).val();
     $.ajax({
@@ -47,5 +47,100 @@ $(document).on("change", "#modal-kichco-soluong", function () {
             console.log(xhr.responseText);
             alert("Error has occurred..");
         }
-    });  
+    });
 });
+
+//Ajax thêm sp vào giỏ hàng
+function themVaoGioHang() {
+    let idctsp = $("#modal-kichco-soluong").val();
+    let soluong = $("#modal-soluong").val();
+    $.ajax({
+        type: 'POST',
+        contentType: 'application/json',
+        data: JSON.stringify({ "idctsp": idctsp, "soluongmua": soluong }),
+        url: '/Cart/AddToCart',
+        success: function (response) {
+            $("#product-count").html(response.length);
+            $(".close").click();
+            swal({
+                title: "Thành công!",
+                text: "Xem chi tiết tại giỏ hàng nhé <3",
+                type: "success",
+                icon: "success",
+                timer: 1500,
+                button: false
+            });
+        },
+        error: function (response) {
+            //debugger;  
+            console.log(xhr.responseText);
+            alert("Error has occurred..");
+        }
+    });
+}
+//Ajax xóa sp trong giỏ hàng
+function xoaGioHang(idctsp) {
+    let total = 0;
+    swal({
+        title: "Bạn có chắc chắn",
+        text: "Xóa sản phẩm này khỏi giỏ hàng",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true,
+    })
+        .then((willDelete) => {
+            if (willDelete) {
+                $.ajax({
+                    type: 'POST',
+                    data: { "idctsp": idctsp },
+                    url: '/Cart/DeleteFromCart',
+                    success: function (response) {
+                        if (response.length == 0) {
+                            window.location = "/Cart/Orders";
+                        } else {
+                            $("#row-order-" + idctsp).remove();
+                            $("#product-count").html(response.length);
+                            $.each(response, function (index) {
+                                total += response[index].SoLuongMua * response[index].GiaMua;
+                            })
+                            $("#order-total").html(total.toLocaleString('it-IT', { style: 'currency', currency: 'VND' }));
+                        }
+                    },
+                    error: function (response) {
+                        //debugger;  
+                        console.log(xhr.responseText);
+                        alert("Error has occurred..");
+                    }
+                });
+            }
+        });
+}
+
+//Ajax đặt hàng
+function datHang() {
+    let data = {};
+    let formData = $('#add-bill-form').serializeArray({
+    });
+    $.each(formData, function (index, value) {
+        data["" + value.name + ""] = value.value;
+    });
+    $.ajax({
+        url: '/Bill/CreateBill',
+        type: 'post',
+        contentType: 'application/json',
+        data: JSON.stringify(data),
+        dataType: 'json',
+        success: function (respone) {
+            if (respone.status == true) {
+                window.location.replace("/Bill/ListBills");
+            } else {
+                $("#add-message").addClass("text-danger");
+                $("#add-message").html(respone.message);
+            }
+        },
+        error: function (respone) {
+            console.log(respone);
+        }
+    });
+    return false;
+}

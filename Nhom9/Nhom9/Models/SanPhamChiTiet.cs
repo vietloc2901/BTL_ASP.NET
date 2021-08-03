@@ -26,8 +26,10 @@ namespace Nhom9.Models
         public int SoLuong { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        [ScriptIgnore]
         public virtual ICollection<ChiTietHoaDon> ChiTietHoaDons { get; set; }
 
+        [ScriptIgnore]
         public virtual KichCo KichCo { get; set; }
 
         [ScriptIgnore]

@@ -45,14 +45,14 @@ function loadData(id) {
             $("#tendangnhap").val(response.TenDangNhap);
             $("#hoten").val(response.HoTen);
             if (response.LoaiTaiKhoan == true) {
-                $("#admin-role").attr("checked", true);
+                $("#admin-role").prop("checked", true);
             } else {
-                $("#manager-role").attr("checked", true);
+                $("#manager-role").prop("checked", true);
             }
             if (response.TrangThai == true) {
-                $("#actived").attr("checked", true);
+                $("#actived").prop("checked", true);
             } else {
-                $("#blocked").attr("checked", true);
+                $("#blocked").prop("checked", true);
             }
         },
         error: function (response) {
@@ -97,6 +97,7 @@ function suaTaiKhoanQuanTri() {
 
 //load data lên form xóa
 function deleteData(id) {
+    $("#delete-message").html("");
     $("#delete-adminuser-id").val(id);
 }
 
@@ -110,6 +111,8 @@ function xoaTaiKhoan() {
             if (response.status == true) {
                 $(".cancelPopup").click();
                 $("#row-" + id).remove();
+            } else {
+                $("#delete-message").html(response.message);
             }
         },
         error: function (response) {

@@ -12,7 +12,14 @@
         <div class="breadcrumb">
             <ul class="d-flex align-items-center">
                 <li>@Html.ActionLink("Trang chủ", "Index", "Home")</li>
-                <li class="active">@Html.ActionLink("Cửa hàng", "Shop", "Product")</li>
+                @if (ViewBag.DanhMuc == null)
+                {
+                    <li class="active">@Html.ActionLink("Cửa hàng", "Shop", "Product")</li>
+                }
+                @if (ViewBag.DanhMuc != null)
+                {
+                    <li class="active">@Html.ActionLink((string) ViewBag.DanhMuc.TenDanhMuc , "Shop","Product", new { ViewBag.DanhMuc.MaDM }, new { })</li>
+                }
             </ul>
         </div>
     </div>
@@ -81,7 +88,7 @@
                                 @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / @Model.PageCount
 
                                 @Html.PagedListPager(Model, page => Url.Action("Shop",
-                                    new { page, pageSize = Model.PageSize, searchString = ViewBag.searchString }))
+                                    new { page, pageSize = Model.PageSize, searchString = ViewBag.searchString, madm = ViewBag.madm }))
                             </ul>
                             <!-- <div class="product-pagination">
                                 <span class="grid-item-list">Hiển thị 1-12</span>

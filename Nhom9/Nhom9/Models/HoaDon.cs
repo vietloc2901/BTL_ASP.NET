@@ -5,6 +5,7 @@ namespace Nhom9.Models
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
+    using System.Web.Script.Serialization;
 
     [Table("HoaDon")]
     public partial class HoaDon
@@ -23,7 +24,6 @@ namespace Nhom9.Models
         public DateTime NgayDat { get; set; }
 
         [Column(TypeName = "ntext")]
-        [Required]
         public string GhiChu { get; set; }
 
         public bool TrangThai { get; set; }
@@ -36,11 +36,14 @@ namespace Nhom9.Models
         [StringLength(11)]
         public string SoDienThoaiNhan { get; set; }
 
-        public DateTime NgaySua { get; set; }
+        public DateTime? NgaySua { get; set; }
+
+        [StringLength(100)]
+        public string NguoiSua { get; set; }
 
         [Required]
         [StringLength(100)]
-        public string NguoiSua { get; set; }
+        public string HoTenNguoiNhan { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ChiTietHoaDon> ChiTietHoaDons { get; set; }

@@ -5,6 +5,7 @@ namespace Nhom9.Models
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
+    using System.Web.Script.Serialization;
 
     [Table("ChiTietHoaDon")]
     public partial class ChiTietHoaDon
@@ -26,6 +27,7 @@ namespace Nhom9.Models
 
         public virtual SanPhamChiTiet SanPhamChiTiet { get; set; }
 
+        [ScriptIgnore]
         public virtual HoaDon HoaDon { get; set; }
     }
 }

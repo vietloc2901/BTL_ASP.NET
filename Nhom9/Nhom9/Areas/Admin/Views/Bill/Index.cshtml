@@ -1,4 +1,6 @@
-﻿
+﻿@model PagedList.IPagedList<Nhom9.Models.HoaDon>
+@using PagedList.Mvc;
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css">
 @{
     ViewBag.Title = "Đơn hàng";
     Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
@@ -15,10 +17,12 @@
 <div class="table-settings mb-4">
     <div class="row align-items-center justify-content-between">
         <div class="col col-md-6 col-lg-3 col-xl-4">
-            <div class="input-group">
-                <span class="input-group-text" id="basic-addon2"><span class="fas fa-search"></span></span>
-                <input type="text" class="form-control" id="exampleInputIconLeft" placeholder="Search" aria-label="Search" aria-describedby="basic-addon2">
-            </div>
+            <form>
+                <div class="input-group">
+                    <button class="input-group-text" type="submit" id="basic-addon2"><span class="fas fa-search"></span></button>
+                    <input type="date" class="form-control" name="searchString" value="@ViewBag.searchString" placeholder="Search" aria-label="Search" aria-describedby="basic-addon2">
+                </div>
+            </form>
         </div>
     </div>
 </div>
@@ -26,102 +30,53 @@
     <table class="table table-hover">
         <thead>
             <tr>
-                <th>Mã</th>
-                <th>Mã khách hàng</th>
+                <th>Tên khách hàng</th>
+                <th>Tên người nhận</th>
                 <th>Ngày đặt</th>
-                <th>Số lượng mua</th>
-                <th>Ghi chú</th>
+                <th>Địa chỉ nhận</th>
                 <th>Trạng thái</th>
                 <th>Tùy chọn</th>
             </tr>
         </thead>
         <tbody>
             <!-- Item -->
-            <tr class="group-info">
-                <td>
-                    <a href="#" class="font-weight-bold">
-                        HD001
-                    </a>
-                </td>
-                <td>
-                    <span class="font-weight-normal">KH001</span>
-                </td>
-                <td><span class="font-weight-normal">20-04-2021</span></td>
-                <td><span class="font-weight-bold">20</span></td>
-                <td><span class="font-weight-normal">Trường Sơn - Lục Nam - Bắc Giang</span></td>
-                <td><span class="font-weight-normal text-danger">Chưa thanh toán</span></td>
-                <td>
-                    <div class="btn-group">
-                        <button class="btn btn-link text-dark dropdown-toggle dropdown-toggle-split m-0 p-0" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <span class="icon icon-sm">
-                                <span class="fas fa-ellipsis-h icon-dark"></span>
-                            </span>
-                            <span class="sr-only">Danh mục lựa chọn</span>
-                        </button>
-                        <div class="dropdown-menu">
-                            <a class="dropdown-item infoBill" href="#"><span class="fas fa-eye mr-2"></span>Chi tiết hóa đơn</a>
-                            <a class="dropdown-item change" href="#"><span class="fas fa-edit mr-2"></span>Chỉnh sửa</a>
-                            <a class="dropdown-item text-danger delete" href="#"><span class="fas fa-trash-alt mr-2"></span>Xóa</a>
+            @foreach (var item in Model)
+            {
+                <tr class="group-info">
+                    <td>
+                        @item.TaiKhoanNguoiDung.HoTen;
+                    </td>
+                    <td>
+                        <span class="font-weight-normal">@item.HoTenNguoiNhan</span>
+                    </td>
+                    <td><span class="font-weight-normal">@item.NgayDat.ToString()</span></td>
+                    <td><span class="font-weight-normal">@item.DiaChiNhan</span></td>
+                    <td><span class="font-weight-normal text-danger">@(item.TrangThai ? "Đã thanh toán" : "Chưa thanh toán")</span></td>
+                    <td>
+                        <div class="btn-group">
+                            <button class="btn btn-link text-dark dropdown-toggle dropdown-toggle-split m-0 p-0" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span class="icon icon-sm">
+                                    <span class="fas fa-ellipsis-h icon-dark"></span>
+                                </span>
+                                <span class="sr-only">Danh mục lựa chọn</span>
+                            </button>
+                            <div class="dropdown-menu">
+                                <button class="dropdown-item infoBill" onclick="loadDuLieuChiTiet(@item.MaHD)"><span class="fas fa-eye mr-2"></span>Chi tiết hóa đơn</button>
+                                <button class="dropdown-item change" onclick="loadDuLieu(@item.MaHD)"><span class="fas fa-edit mr-2"></span>Chỉnh sửa</button>
+                            </div>
                         </div>
-                    </div>
-                </td>
-            </tr>
-            <!-- Item -->
-            <tr class="group-info">
-                <td>
-                    <a href="#" class="font-weight-bold">
-                        HD002
-                    </a>
-                </td>
-                <td>
-                    <span class="font-weight-normal">KH002</span>
-                </td>
-                <td><span class="font-weight-normal">20-04-2021</span></td>
-                <td><span class="font-weight-bold">20</span></td>
-                <td><span class="font-weight-normal">Thái Bình</span></td>
-                <td><span class="font-weight-normal text-success">Đã thanh toán</span></td>
-                <td>
-                    <div class="btn-group">
-                        <button class="btn btn-link text-dark dropdown-toggle dropdown-toggle-split m-0 p-0" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <span class="icon icon-sm">
-                                <span class="fas fa-ellipsis-h icon-dark"></span>
-                            </span>
-                            <span class="sr-only">Danh mục lựa chọn</span>
-                        </button>
-                        <div class="dropdown-menu">
-                            <a class="dropdown-item infoBill" href="#"><span class="fas fa-eye mr-2"></span>Chi tiết hóa đơn</a>
-                            <a class="dropdown-item change" href="#"><span class="fas fa-edit mr-2"></span>Chỉnh sửa</a>
-                            <a class="dropdown-item text-danger delete" href="#"><span class="fas fa-trash-alt mr-2"></span>Xóa</a>
-                        </div>
-                    </div>
-                </td>
-            </tr>
+                    </td>
+                </tr>
+            }
         </tbody>
     </table>
     <div class="card-footer px-3 border-0 d-flex align-items-center justify-content-between">
         <nav aria-label="Page navigation example">
             <ul class="pagination mb-0">
-                <li class="page-item">
-                    <a class="page-link" href="#">Previous</a>
-                </li>
-                <li class="page-item">
-                    <a class="page-link" href="#">1</a>
-                </li>
-                <li class="page-item active">
-                    <a class="page-link" href="#">2</a>
-                </li>
-                <li class="page-item">
-                    <a class="page-link" href="#">3</a>
-                </li>
-                <li class="page-item">
-                    <a class="page-link" href="#">4</a>
-                </li>
-                <li class="page-item">
-                    <a class="page-link" href="#">5</a>
-                </li>
-                <li class="page-item">
-                    <a class="page-link" href="#">Next</a>
-                </li>
+                @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / @Model.PageCount
+
+                @Html.PagedListPager(Model, page => Url.Action("Index",
+                    new { page, pageSize = Model.PageSize, searchString = ViewBag.searchString }))
             </ul>
         </nav>
     </div>
@@ -136,22 +91,15 @@
                     <div class="row">
                         <div class="col-md-6 mb-2">
                             <div>
-                                <label for="category">Mã hóa đơn</label>
-                                <input class="form-control" id="billCode" type="text" value="HD001" required disabled>
+                                <label for="category">Tên người đặt</label>
+                                <input class="form-control" id="hd-nguoidat" type="text" value="" readonly disabled>
                             </div>
                         </div>
                         <div class="col-md-6 mb-2">
                             <div>
-                                <label for="nameProduct">Tên khách hàng</label>
-                                <input class="form-control" id="customerFullname" type="text" value="Bùi Văn Hà" required disabled>
+                                <label for="nameProduct">Tên người nhận</label>
+                                <input class="form-control" id="hd-nguoinhan" type="text" value="" readonly disabled>
                             </div>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-md-6 mb-2">
-                            <label for="color">Trạng thái đơn hàng</label><br>
-                            <span class="font-weight-normal text-danger">Chưa thanh toán</span>
                         </div>
                     </div>
 
@@ -159,13 +107,13 @@
                         <div class="col-md-6 mb-2">
                             <div>
                                 <label for="dateBuy">Ngày đặt</label>
-                                <input class="form-control" id="dateBuy" type="text" value="20 - 04 - 2020" required disabled>
+                                <input class="form-control" id="hd-ngaydat" readonly type="text" value="" disabled>
                             </div>
                         </div>
                         <div class="col-md-6 mb-2">
                             <div>
-                                <label for="size">Số lượng mua</label>
-                                <input class="form-control" id="amount" type="text" value="20" required disabled>
+                                <label for="size">Trạng thái</label>
+                                <input class="form-control" id="hd-trangthai" type="text" readonly value="" disabled>
                             </div>
                         </div>
                     </div>
@@ -173,13 +121,13 @@
                         <div class="col-md-6 mb-2">
                             <div>
                                 <label for="phone">Số điện thoại</label>
-                                <input class="form-control" id="phone" type="text" value="0967.393.125" required disabled>
+                                <input class="form-control" id="hd-sdt" type="text" value="" readonly disabled>
                             </div>
                         </div>
                         <div class="col-md-6 mb-2">
                             <div>
                                 <label for="address">Địa chỉ nhận</label>
-                                <input class="form-control" id="address" type="text" value="Trường Sơn - Lục Nam - Bắc Giang" required disabled>
+                                <input class="form-control" id="hd-diachi" type="text" value="" readonly disabled>
                             </div>
                         </div>
                     </div>
@@ -188,57 +136,22 @@
                         <table class="table table-hover">
                             <thead>
                                 <tr>
-                                    <th>Mã sản phẩm</th>
-                                    <th>Mã danh mục</th>
                                     <th>Hình ảnh</th>
                                     <th>Tên sản phẩm</th>
                                     <th>Giá</th>
                                     <th>Số lượng</th>
                                     <th>Kích cỡ</th>
-                                    <th>Màu sắc</th>
+                                    <th>Tổng</th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                <!-- Item -->
-                                <tr>
-                                    <td>
-                                        <a href="#" class="font-weight-bold">
-                                            SP2541
-                                        </a>
-                                    </td>
-                                    <td>
-                                        <span class="font-weight-normal">DM002</span>
-                                    </td>
-                                    <td class="img">
-                                        <div class="image-clothes">
-                                            <img src="https://images.pexels.com/photos/4937449/pexels-photo-4937449.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500" alt="Hình ảnh" />
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <span class="font-weight-bold">Áo thời trang đỏ đô</span>
-                                    </td>
-                                    <td>
-                                        <span class="font-weight-bold">150.000</span>
-                                    </td>
-                                    <td>
-                                        <span class="font-weight-bold">10</span>
-                                    </td>
-                                    <td>
-                                        <span class="font-weight-bold">Free size</span>
-                                    </td>
-                                    <td class="td-color-clothes">
-                                        <span class="font-weight-bold color-clothes color-clothes-primary ">
-                                        </span>
-                                    </td>
-                                </tr>
-                                <!-- Item -->
+                            <tbody id="hd-body">
                             </tbody>
                         </table>
                     </div>
                     <div class="row">
                         <div>
                             <label for="note">Ghi chú</label>
-                            <textarea class="form-control" id="exampleFormControlTextarea1" rows="5" disabled>Sản phẩm dễ vỡ, vui lòng nhẹ tay !</textarea>
+                            <textarea class="form-control" id="hd-ghichu" rows="5" disabled></textarea>
                         </div>
                     </div>
 
@@ -257,29 +170,30 @@
         <div class="col-12 col-cl-10">
             <div class="card card-body bg-white border-light shadow-sm mb-4">
                 <h2 class="h5 mb-4">Chỉnh sửa hóa đơn</h2>
-                <form>
+                <form id="update-form">
                     <div class="row">
                         <div class="col-md-6 mb-3">
                             <div>
-                                <label for="category">Mã hóa đơn</label>
-                                <input class="form-control" id="billCode" type="text" value="HD001" required disabled>
-                            </div>
-                        </div>
-                        <div class="col-md-6 mb-3">
-                            <div>
-                                <label for="nameProduct">Tên khách hàng</label>
+                                <label for="nameProduct">Tên người đặt</label>
                                 <input class="form-control" id="customerFullname" type="text" value="Bùi Văn Hà" required disabled>
                             </div>
                         </div>
                     </div>
-
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <div>
+                                <label for="nameProduct">Tên người nhận</label>
+                                <input class="form-control" id="customerFullname" type="text" value="Bùi Văn Hà" required disabled>
+                            </div>
+                        </div>
+                    </div>
                     <div class="row">
                         <div class="col-md-6 mb-3">
                             <span>Trạng thái đơn hàng</span><br>
                             <input id="statusNotPaying" type="radio" name="statusPay" required checked>
                             <label for="statusNotPaying" class="font-weight-normal text-danger">Chưa thanh toán</label>
-                            <br class="owl-hidden "/>
-                            <input id="statusPaying" type="radio" name="statusPay" required >
+                            <br class="owl-hidden " />
+                            <input id="statusPaying" type="radio" name="statusPay" required>
                             <label for="statusPaying" class="font-weight-normal text-success">Đã Thanh toán</label>
                         </div>
                     </div>
@@ -332,23 +246,11 @@
 
 @section deletePopup {
     <div class="deletePopUp" id="deletePopUp">
-        <section class="vh-lg-100 d-flex align-items-center">
-            <div class="container">
-                <div class="row justify-content-center form-bg-image">
-                    <div class="col-12 d-flex align-items-center justify-content-center">
-                        <div class="signin-inner my-3 my-lg-0 bg-white shadow-soft border rounded border-light p-4 p-lg-5 w-100 fmxw-500">
-                            <h6 class="form-group mb-4 text-center fa-1x">
-                                Bạn có chắc chắn muốn xóa danh mục không ?
-                            </h6>
-                            <div class="row d-flex flex-row">
-                                <button type="submit" class="btn btn-block btn-danger">Chắc chắn</button>
-                                <div class="btn btn-block border-primary cancelPopup" id="cancelPopupDel">Hủy</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
+
     </div>
+
+}
+@section Script{
     <script src="~/Assets/Admin/js/addPopupBill.js"></script>
+    <script src="~/Assets/Admin/js/Bill.js"></script>
 }

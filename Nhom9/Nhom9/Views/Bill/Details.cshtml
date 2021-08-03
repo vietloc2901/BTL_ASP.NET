@@ -1,6 +1,6 @@
-﻿@model List<Nhom9.Models.SanPhamChiTiet>
+﻿@model Nhom9.Models.HoaDon
 @{
-    ViewBag.Title = "Giỏ hàng";
+    ViewBag.Title = "Chi tiết hóa đơn";
     Layout = "~/Views/Shared/_Layout.cshtml";
     var info = System.Globalization.CultureInfo.GetCultureInfo("vi-VN");
     Decimal tongtien = 0;
@@ -12,7 +12,7 @@
         <div class="breadcrumb">
             <ul class="d-flex align-items-center">
                 <li>@Html.ActionLink("Trang chủ", "Index", "Home")</li>
-                <li class="active">@Html.ActionLink("Giỏ hàng", "Orders", "Cart")</li>
+                <li class="active">@Html.ActionLink("Chi tiết đơn hàng", "Details", "Bill", new { id = Model.MaHD },new { })</li>
             </ul>
         </div>
     </div>
@@ -28,12 +28,6 @@
                 <form action="#">
                     <div class="table-content table-responsive mb-45">
                         <!-- Table Content Start -->
-                        @if (Model.Count == 0)
-                        {
-                            <h2>Chưa có sản phẩm nào trong giỏ hàng</h2>
-                        }
-                        @if (Model.Count != 0)
-                        {
 
                             <table>
                                 <thead>
@@ -44,41 +38,30 @@
                                         <th class="product-price">Giá</th>
                                         <th class="product-quantity">Số lượng</th>
                                         <th class="product-subtotal">Tổng</th>
-                                        <th class="product-remove">Xóa</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach (var item in Model)
+                                    @foreach (var item in Model.ChiTietHoaDons)
                                     {
-                                        <tr id="row-order-@item.IDCTSP">
+                                        <tr>
                                             <td class="product-thumbnail">
-                                                <a href="@Url.Action("ProductDetail","Product",new { id = item.MaSP })"><img src="@item.SanPham.HinhAnh" alt="cart-image" /></a>
+                                                <a href="@Url.Action("ProductDetail","Product",new { id = item.SanPhamChiTiet.SanPham.MaSP })"><img src="@item.SanPhamChiTiet.SanPham.HinhAnh" alt="cart-image" /></a>
                                             </td>
-                                            <td class="product-name"><a href="@Url.Action("ProductDetail","Product",new { id = item.MaSP })">@item.SanPham.TenSP</a></td>
-                                            <td class="product-size"><b>@item.KichCo.TenKichCo</b></td>
-                                            <td class="product-price"><span class="amount">@string.Format(info, "{0:c0}", item.ChiTietHoaDons.First().GiaMua)</span></td>
+                                            <td class="product-name"><a href="@Url.Action("ProductDetail","Product",new { id = item.SanPhamChiTiet.SanPham.MaSP })">@item.SanPhamChiTiet.SanPham.TenSP</a></td>
+                                            <td class="product-size"><b>@item.SanPhamChiTiet.KichCo.TenKichCo</b></td>
+                                            <td class="product-price"><span class="amount">@string.Format(info, "{0:c0}", item.GiaMua)</span></td>
                                             <td class="product-quantity">
-                                                <input readonly type="number" value="@item.ChiTietHoaDons.First().SoLuongMua" />
+                                                <input readonly type="number" value="@item.SoLuongMua" />
                                             </td>
-                                            <td class="product-total"><span class="amount">@(string.Format(info,"{0:c0}", item.ChiTietHoaDons.First().GiaMua * item.ChiTietHoaDons.First().SoLuongMua))</span></td>
-                                            <td class="product-remove"> <a style="cursor: pointer" onclick="xoaGioHang(@item.IDCTSP)"><i class="fa fa-times" aria-hidden="true"></i></a></td>
+                                            <td class="product-total"><span class="amount">@(string.Format(info,"{0:c0}", item.GiaMua * item.SoLuongMua))</span></td>
                                         </tr>
-                                        tongtien += item.ChiTietHoaDons.First().GiaMua * item.ChiTietHoaDons.First().SoLuongMua;
-                                    }
+                                        tongtien += item.GiaMua * item.SoLuongMua;
+                                        }
                                 </tbody>
                             </table>
-                        }
                     </div>
                     <!-- Table Content Start -->
                     <div class="row">
-                        <!-- Cart Button Start -->
-                        <div class="col-md-8 col-sm-12">
-                            <div class="buttons-cart">
-                                @Html.ActionLink("Cập nhật giỏ hàng", "Orders", "Cart")
-                                @Html.ActionLink("Tiếp tục mua sắm", "Index", "Home")
-                            </div>
-                        </div>
-                        <!-- Cart Button Start -->
                         <!-- Cart Totals Start -->
                         <div class="col-md-4 col-sm-12">
                             <div class="cart_totals float-md-right text-md-right">
@@ -95,16 +78,6 @@
                                         </tr>
                                     </tbody>
                                 </table>
-                                <div class="wc-proceed-to-checkout">
-                                    @if (Model.Count == 0)
-                                    {
-                                        <a href="#" >Đặt hàng</a>
-                                    }
-                                    @if (Model.Count != 0)
-                                    {
-                                        @Html.ActionLink("Đặt hàng", "CheckOut", "Cart")
-                                    }
-                                </div>
                             </div>
                         </div>
                         <!-- Cart Totals End -->
