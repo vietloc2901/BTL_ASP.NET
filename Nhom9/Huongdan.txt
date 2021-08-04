@@ -1,0 +1,7 @@
+Trong model có 1 số chỗ mình để [ScriptIgnore] mà khi tạo từ database
+sẽ ko có nên ae để ý chỗ nào có thì thêm vào nhé.
+Add package pagelist nhé
+Chạy file script tạo database
+Kết nối với db bằng ef code first đặt tên là Nhom9DB
+rebuild solution, Xem trong tất cả các model có chỗ nào
+mình để [ScriptIgnore] thì thêm vào. Ko là gọi json sẽ lỗi
