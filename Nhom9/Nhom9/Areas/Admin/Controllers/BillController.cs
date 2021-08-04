@@ -32,8 +32,33 @@ namespace Nhom9.Areas.Admin.Controllers
             HoaDon hd = db.HoaDons.Include("TaiKhoanNguoiDung")
                 .Where(x => x.MaHD == id).FirstOrDefault();
             IEnumerable<ChiTietHoaDon> chiTietHoaDons = db.ChiTietHoaDons.Include("SanPhamChiTiet")
-                .Include("SanPhamChiTiet.SanPham").Include("SanPhamChiTiet.KichCo").Where(x => x.MaHD == id);
-            return Json(new { hoadon = hd, cthd = chiTietHoaDons }, JsonRequestBehavior.AllowGet);
+                .Include("SanPhamChiTiet.KichCo")
+                .Where(x => x.MaHD == id);
+            List<SanPham> list = new List<SanPham>();
+            foreach(ChiTietHoaDon item in chiTietHoaDons)
+            {
+                list.Add(db.SanPhams.Where(x => x.MaSP == item.SanPhamChiTiet.MaSP).FirstOrDefault());
+            }
+            return Json(new { hoadon = hd, cthd = chiTietHoaDons, sp = list }, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public JsonResult ChangeStatus(int mahd, int stt)
+        {
+            try
+            {
+                TaiKhoanQuanTri tk = (TaiKhoanQuanTri)Session[Nhom9.Session.ConstaintUser.ADMIN_SESSION];
+                HoaDon hd = db.HoaDons.Where(x => x.MaHD == mahd).FirstOrDefault();
+                hd.TrangThai = stt;
+                hd.NguoiSua = tk.HoTen;
+                hd.NgaySua = DateTime.Now;
+                db.SaveChanges();
+                return Json(new { status = true }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception)
+            {
+                return Json(new { status = false }, JsonRequestBehavior.AllowGet);
+            }
         }
     }
 }

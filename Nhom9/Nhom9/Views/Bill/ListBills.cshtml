@@ -22,7 +22,7 @@
         <div class="row">
             <div class="col-md-12 col-sm-12">
                 <!-- Form Start -->
-                <form action="#">
+                <form >
                     <div class="table-content table-responsive mb-45">
                         <!-- Table Content Start -->            
                             <table>
@@ -31,20 +31,30 @@
                                         <th class="product-thumbnail">Ngày đặt</th>
                                         <th class="product-name">Người nhận</th>
                                         <th class="product-size">Số điện thoại</th>
+                                        <th class="product-status">Trạng thái</th>
                                         <th class="product-detail">Chi tiết</th>
+                                        <th></th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @foreach (var item in Model)
                                     {
-                                        <tr>
-                                            <td class="product-thumbnail">
-                                               <b>@item.NgayDat</b>
-                                            </td>
-                                            <td class="product-name">@item.HoTenNguoiNhan</td>
-                                            <td class="product-size"><b>@item.SoDienThoaiNhan</b></td>
-                                            <td><a href="@Url.Action("Details","Bill", new { id = item.MaHD })">Chi tiết</a></td>
-                                        </tr>
+                                    <tr>
+                                        <td class="product-thumbnail">
+                                            <b>@item.NgayDat</b>
+                                        </td>
+                                        <td class="product-name">@item.HoTenNguoiNhan</td>
+                                        <td class="product-size"><b>@item.SoDienThoaiNhan</b></td>
+                                        <td class="product-status">
+                                            @(item.TrangThai == 0 ? "Đã bị hủy" :
+                                            (item.TrangThai == 1) ? "Đang chuẩn bị" : (item.TrangThai == 2)? "Đang giao" : "Đã thanh toán")
+                                        </td>
+                                        <td><a href="@Url.Action("Details","Bill", new { id = item.MaHD })">Chi tiết</a></td>
+                                        @if (item.TrangThai == 1)
+                                        {
+                                            <td><button class="btn btn-danger" type="button" onclick="huyDonHang(@item.MaHD)">Hủy đơn hàng</button></td>
+                                        }
+                                    </tr>
                                     }
                                 </tbody>
                             </table>

@@ -5,6 +5,7 @@ namespace Nhom9.Models
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
+    using System.Web.Script.Serialization;
 
     [Table("SanPham")]
     public partial class SanPham

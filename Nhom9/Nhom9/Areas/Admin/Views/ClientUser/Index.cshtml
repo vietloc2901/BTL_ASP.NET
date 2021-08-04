@@ -63,7 +63,9 @@
                                 <span class="sr-only">Danh mục lựa chọn</span>
                             </button>
                             <div class="dropdown-menu">
-                                <button class="dropdown-item change" onclick="loadData(@item.MaTK)"><span class="fas fa-edit mr-2"></span>Chỉnh sửa</button>
+                                <button class="dropdown-item change" onclick="suaTaiKhoan(@item.MaTK)"><span class="fas fa-edit mr-2"></span>
+                                    @(item.TrangThai ? "Vô hiệu hóa" : "Kích hoạt")
+                                </button>
                                 <button class="dropdown-item text-danger delete" onclick="deleteData(@item.MaTK)"><span class="fas fa-trash-alt mr-2"></span>Xóa</button>
                             </div>
                         </div>
@@ -84,56 +86,6 @@
     </div>
 </div>
 
-@section changePopup {
-    <div class="changePopUp popupPrivate" id="changePopUp">
-        <section class="vh-lg-100 d-flex align-items-center">
-            <div class="container">
-                <div class="row justify-content-center form-bg-image">
-                    <div class="col-12 d-flex align-items-center justify-content-center">
-                        <div class="signin-inner my-3 my-lg-0 bg-white shadow-soft border rounded border-light p-4 p-lg-5 w-100 fmxw-500">
-                            <div class="text-center text-md-center mb-4 mt-md-0">
-                                <h1 class="mb-0 h3 text-popup">Chỉnh sửa trạng thái người dùng</h1>
-                            </div>
-                            <form id="update-form" onsubmit="return suaTaiKhoan()">
-                                <div class="form-group mb-4">
-                                    <p id="update-message"></p>
-                                    <hr />
-                                    <input type="hidden" id="matk" name="matk" value="" />
-                                    <!-- Form -->
-                                    <div class="form-group mb-4">
-                                        <label for="adminAccount">Tên đăng nhập</label>
-                                        <div class="input-group">
-                                            <input type="text" class="form-control" placeholder="Tên đăng nhập" id="tendangnhap" disabled value="" autofocus required>
-                                        </div>
-                                    </div>
-                                    <!-- End of Form -->
-                                    <!-- Form -->
-                                    <div class="form-group mb-4">
-                                        <label for="fullName">Họ và tên</label>
-                                        <div class="input-group">
-                                            <input type="text" class="form-control" placeholder="Họ và tên" value="" disabled id="hoten" required>
-                                        </div>
-                                    </div>
-                                    <label for="optionsAccount">Trạng thái tài khoản</label>
-                                    <div class="input-group" style="display: flex; align-items: center" id="optionsAccount">
-                                        <input type="radio" name="trangthai" value="true" id="actived" style="margin-right: 10px" checked />
-                                        <label for="actived" class="text-success" style="display: contents;">Kích hoạt</label>
-
-                                        <input type="radio" name="trangthai" value="false" id="blocked" style="margin: 0 10px 0 20px" />
-                                        <label for="blocked" class="text-danger" style="display: contents">Vô hiệu hóa</label>
-                                    </div>
-                                </div>
-                                <!-- End of Form -->
-                                <button type="submit" class="btn btn-block btn-secondary">Chỉnh sửa</button>
-                                <div class="btn btn-block border-primary cancelPopup" id="cancelPopup">Hủy</div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-    </div>
-}
 
 @section deletePopup {
     <div class="deletePopUp" id="deletePopUp">

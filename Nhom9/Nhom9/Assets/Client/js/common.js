@@ -1,4 +1,5 @@
-﻿function loadSanPham(id) {
+﻿//Load sản phẩm lên modal
+function loadSanPham(id) {
     $.ajax({
         type: 'POST',
         data: { "id": id },
@@ -143,4 +144,53 @@ function datHang() {
         }
     });
     return false;
+}
+
+//Ajax Hủy đơn hàng
+function huyDonHang(id) {
+    swal({
+        title: "Cảnh báo",
+        text: "Bạn có chắc về việc hủy đơn hàng này!",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true,
+    })
+        .then((willDelete) => {
+            if (willDelete) {
+                $.ajax({
+                    type: 'POST',
+                    data: { "mahd": id, "stt": 0 },
+                    url: '/Bill/ChangeStatus',
+                    success: function (response) {
+                        if (response.status == true) {
+                            swal({
+                                title: "Thành công!",
+                                text: "Hủy đơn hàng thành công !",
+                                type: "success",
+                                icon: "success",
+                                timer: 1500,
+                                button: false
+                            });
+                        } else {
+                            swal({
+                                title: "Thất bại!",
+                                text: "Bạn không thể hủy đơn hàng do đơn hàng đã đang giao",
+                                type: "danger",
+                                icon: "error",
+                                timer: 1500,
+                                button: false
+                            });
+                        }
+                        setTimeout(function () {
+                            window.location = "/Bill/ListBills";
+                        }, 1500);
+                    },
+                    error: function (response) {
+                        //debugger;  
+                        console.log(xhr.responseText);
+                        alert("Error has occurred..");
+                    }
+                });
+            }
+        });
 }

@@ -4,6 +4,7 @@
 @{
     ViewBag.Title = "Sản phẩm";
     Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+    Nhom9.Models.TaiKhoanQuanTri tk = (Nhom9.Models.TaiKhoanQuanTri)HttpContext.Current.Session[Nhom9.Session.ConstaintUser.ADMIN_SESSION];
 }
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center py-4">
     <div class="d-block mb-4 mb-md-0">
@@ -92,7 +93,10 @@
                             </button>
                             <div class="dropdown-menu">
                                 <button class="dropdown-item change" onclick="loadData(@item.MaSP)"><span class="fas fa-edit mr-2"></span>Chỉnh sửa</button>
-                                <button class="dropdown-item text-danger delete" onclick="deleteData(@item.MaSP)"><span class="fas fa-trash-alt mr-2"></span>Xóa</button>
+                                @if (tk.LoaiTaiKhoan)
+                                {
+                                    <button class="dropdown-item text-danger delete" onclick="deleteData(@item.MaSP)"><span class="fas fa-trash-alt mr-2"></span>Xóa</button>
+                                }
                             </div>
                         </div>
                     </td>
@@ -151,7 +155,7 @@
                             <div>
                                 <label for="priceProduct">Giá sản phẩm</label>
                                 <input class="form-control" type="number" name="gia"
-                                      min="0" step="any" value="0" required>
+                                       min="0" step="any" value="0" required>
                             </div>
                         </div>
                     </div>
@@ -255,7 +259,7 @@
                             <div>
                                 <label for="nameProduct">Giá sản phẩm</label>
                                 <input class="form-control" id="gia" type="number"
-                                        name="gia" min="0" step="any" required>
+                                       name="gia" min="0" step="any" required>
                             </div>
                         </div>
                     </div>
@@ -280,15 +284,15 @@
                         <div class="col-md-12 mb-3">
                             <div>
                                 <label for="size">Kích thước</label>
-                                <div class="list-group d-flex flex-row" >
+                                <div class="list-group d-flex flex-row">
                                     @foreach (var item in ViewBag.Size)
                                     {
-                                    <div class="list-group-item justify-content-center align-item d-flex flex-column w-25 form-update">
-                                        <input type="hidden" id="update-@item.MaKichCo" value="" name="idctsp" />
-                                        <label for="kichco-@item.MaKichCo" class="text-center">@item.TenKichCo</label>
-                                        <br>
-                                        <input class="form-control" type="number" min="0" name="soluong" id="kichco-@item.MaKichCo" value="0">
-                                    </div>
+                                        <div class="list-group-item justify-content-center align-item d-flex flex-column w-25 form-update">
+                                            <input type="hidden" id="update-@item.MaKichCo" value="" name="idctsp" />
+                                            <label for="kichco-@item.MaKichCo" class="text-center">@item.TenKichCo</label>
+                                            <br>
+                                            <input class="form-control" type="number" min="0" name="soluong" id="kichco-@item.MaKichCo" value="0">
+                                        </div>
                                     }
                                 </div>
                             </div>

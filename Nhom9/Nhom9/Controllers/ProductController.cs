@@ -39,7 +39,7 @@ namespace Nhom9.Controllers
         }
 
         [HttpPost]
-        public ActionResult Index(int id)
+        public JsonResult Index(int id)
         {
             SanPham sp = db.SanPhams.Include("DanhMuc").Include("SanPhamChiTiets").Where(s => s.MaSP.Equals(id)).FirstOrDefault();
             return Json(sp, JsonRequestBehavior.AllowGet);
@@ -48,7 +48,7 @@ namespace Nhom9.Controllers
         [HttpPost]
         public JsonResult Detail(int id)
         {
-            SanPhamChiTiet spct = db.SanPhamChiTiets.Where(sp => sp.IDCTSP.Equals(id)).FirstOrDefault();
+            SanPhamChiTiet spct = db.SanPhamChiTiets.Where(sp => sp.IDCTSP == id).FirstOrDefault();
             return Json(spct, JsonRequestBehavior.AllowGet);
         }
     }

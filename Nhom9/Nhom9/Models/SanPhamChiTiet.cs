@@ -29,7 +29,6 @@ namespace Nhom9.Models
         [ScriptIgnore]
         public virtual ICollection<ChiTietHoaDon> ChiTietHoaDons { get; set; }
 
-        [ScriptIgnore]
         public virtual KichCo KichCo { get; set; }
 
         [ScriptIgnore]

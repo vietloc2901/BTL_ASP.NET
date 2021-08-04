@@ -17,7 +17,7 @@ namespace Nhom9.Controllers
         {
             List<HoaDon> list = new List<HoaDon>();
             TaiKhoanNguoiDung tk = (TaiKhoanNguoiDung)Session[Nhom9.Session.ConstaintUser.USER_SESSION];
-            list = db.HoaDons.Where(p => p.MaTK == tk.MaTK).ToList();
+            list = db.HoaDons.Where(p => p.MaTK == tk.MaTK).OrderByDescending(x => x.NgayDat).ToList();
             return View(list);
         }
 
@@ -49,7 +49,7 @@ namespace Nhom9.Controllers
             {
                 hd.NgayDat = DateTime.Now;
                 hd.NgaySua = DateTime.Now;
-                hd.TrangThai = false;
+                hd.TrangThai = 1;
                 db.HoaDons.Add(hd);
                 db.SaveChanges();
                 List<ChiTietHoaDon> list = (List<ChiTietHoaDon>)Session[Nhom9.Session.ConstainCart.CART];
@@ -67,6 +67,29 @@ namespace Nhom9.Controllers
                 return Json(new { status = false, message = "Có lỗi gì đó! Thử lại sau" + ex.Message });
             }
 
+        }
+
+        [HttpPost]
+        public JsonResult ChangeStatus(int mahd, int stt)
+        {
+            try
+            {
+                TaiKhoanNguoiDung tk = (TaiKhoanNguoiDung)Session[Nhom9.Session.ConstaintUser.USER_SESSION];
+                HoaDon hd = db.HoaDons.Where(x => x.MaHD == mahd).FirstOrDefault();
+                if(hd.TrangThai != 1)
+                {
+                    return Json(new { status = false }, JsonRequestBehavior.AllowGet);
+                }
+                hd.TrangThai = stt;
+                hd.NguoiSua = tk.HoTen;
+                hd.NgaySua = DateTime.Now;
+                db.SaveChanges();
+                return Json(new { status = true }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception)
+            {
+                return Json(new { status = false }, JsonRequestBehavior.AllowGet);
+            }
         }
     }
 }

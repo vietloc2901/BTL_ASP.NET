@@ -5,6 +5,7 @@ namespace Nhom9.Models
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
+    using System.Web.Script.Serialization;
 
     [Table("KichCo")]
     public partial class KichCo
@@ -23,6 +24,7 @@ namespace Nhom9.Models
         public string TenKichCo { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        [ScriptIgnore]
         public virtual ICollection<SanPhamChiTiet> SanPhamChiTiets { get; set; }
     }
 }

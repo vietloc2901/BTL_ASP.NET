@@ -33,12 +33,12 @@ namespace Nhom9.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public JsonResult Update(TaiKhoanNguoiDung tk)
+        public JsonResult Update(int Matk)
         {
             try
             {
-                TaiKhoanNguoiDung update = db.TaiKhoanNguoiDungs.Where(a => a.MaTK.Equals(tk.MaTK)).FirstOrDefault();
-                update.TrangThai = tk.TrangThai;
+                TaiKhoanNguoiDung update = db.TaiKhoanNguoiDungs.Where(a => a.MaTK.Equals(Matk)).FirstOrDefault();
+                update.TrangThai = !update.TrangThai;
                 db.Entry(update).State = EntityState.Modified;
                 db.SaveChanges();
                 return Json(new { status = true, message = "Sửa thông tin thành công" });

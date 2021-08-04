@@ -26,7 +26,7 @@ namespace Nhom9.Models
         [Column(TypeName = "ntext")]
         public string GhiChu { get; set; }
 
-        public bool TrangThai { get; set; }
+        public int TrangThai { get; set; }
 
         [Required]
         [StringLength(100)]

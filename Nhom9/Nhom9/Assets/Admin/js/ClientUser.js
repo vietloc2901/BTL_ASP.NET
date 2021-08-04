@@ -1,51 +1,57 @@
 ﻿
 //load dữ liệu lên form sửa
-function loadData(id) {
-    $.ajax({
-        type: 'POST',
-        data: { "id": id },
-        url: '/ClientUser/Index',
-        success: function (response) {
-            $("#matk").val(response.MaTK);
-            $("#tendangnhap").val(response.TenDangNhap);
-            $("#hoten").val(response.HoTen);
-            if (response.TrangThai == true) {
-                $("#actived").attr("checked", true);
-            } else {
-                $("#blocked").attr("checked", true);
-            }
-        },
-        error: function (response) {
-            //debugger;  
-            console.log(xhr.responseText);
-            alert("Error has occurred..");
-        }
-    });
-}
+//function loadData(id) {
+//    $.ajax({
+//        type: 'POST',
+//        data: { "id": id },
+//        url: '/ClientUser/Index',
+//        success: function (response) {
+//            $("#matk").val(response.MaTK);
+//            $("#tendangnhap").val(response.TenDangNhap);
+//            $("#hoten").val(response.HoTen);
+//            if (response.TrangThai == true) {
+//                $("#actived").attr("checked", true);
+//            } else {
+//                $("#blocked").attr("checked", true);
+//            }
+//        },
+//        error: function (response) {
+//            //debugger;  
+//            console.log(xhr.responseText);
+//            alert("Error has occurred..");
+//        }
+//    });
+//}
 
 //ajax sửa tài khoản
-function suaTaiKhoan() {
-    let data = {};
-    let formData = $('#update-form').serializeArray({
-    });
-    $.each(formData, function (index, value) {
-        data["" + value.name + ""] = value.value;
-    });
+function suaTaiKhoan(id) {
     $.ajax({
         url: '/ClientUser/Update',
         type: 'post',
-        contentType: 'application/json',
-        data: JSON.stringify(data),
+        data: { Matk: id },
         dataType: 'json',
         success: function (respone) {
-            $("#update-message").html(respone.message);
             if (respone.status == true) {
-                $("#update-message").addClass("text-warning");
+                swal({
+                    title: "Thành công!",
+                    text: respone.message,
+                    type: "success",
+                    icon: "success",
+                    timer: 1500,
+                    button: false
+                });
                 setTimeout(function () {
                     window.location.replace("/Admin/ClientUser");
-                }, 1000)
+                }, 1500)
             } else {
-                $("#update-message").addClass("text-danger");
+                swal({
+                    title: "Thất bại!",
+                    text: respone.message,
+                    type: "danger",
+                    icon: "error",
+                    timer: 1500,
+                    button: false
+                });
             }
         },
         error: function (respone) {

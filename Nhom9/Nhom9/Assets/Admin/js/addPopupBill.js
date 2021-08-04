@@ -7,8 +7,8 @@ let deletePopup = document.getElementById('deletePopUp');
 let cancelPopupDel = document.getElementById('cancelPopupDel');
 let deleteBtn = document.getElementsByClassName('delete');
 
-let changePopUp = document.getElementById("changePopUp");
-let changeBtn = document.getElementsByClassName('change');
+//let changePopUp = document.getElementById("changePopUp");
+//let changeBtn = document.getElementsByClassName('change');
 
 function add(overlay, popup) {
     overlay.style.display = 'block';
@@ -32,11 +32,11 @@ for (let i = 0; i < deleteBtn.length; i++) {
     });
 }
 
-for (let i = 0; i < changeBtn.length; i++) {
-    changeBtn[i].addEventListener('click', function () {
-        add(overlay, changePopUp);
-    });
-}
+//for (let i = 0; i < changeBtn.length; i++) {
+//    changeBtn[i].addEventListener('click', function () {
+//        add(overlay, changePopUp);
+//    });
+//}
 
 for (let i = 0; i < cancelPopup.length; i++) {
     cancelPopup[i].addEventListener('click', function () {
@@ -45,6 +45,5 @@ for (let i = 0; i < cancelPopup.length; i++) {
             popUp.style.display = 'none';
         }
         deletePopup.style.display = 'none';
-        changePopUp.style.display = 'none';
     });
 }
