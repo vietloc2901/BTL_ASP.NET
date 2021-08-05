@@ -14,9 +14,14 @@ namespace Nhom9.Areas.Admin.Controllers
         Nhom9DB db = new Nhom9DB();
         // GET: Admin/Bill
         [HttpGet]
-        public ActionResult Index(DateTime? searchString, int page = 1, int pageSize = 10)
+        public ActionResult Index(DateTime? searchString,int? status ,int page = 1, int pageSize = 10)
         {
             List<HoaDon> hoaDons = db.HoaDons.Include("TaiKhoanNguoiDung").Select(p => p).ToList();
+            if(status != null)
+            {
+                hoaDons = hoaDons.Where(x => x.TrangThai == status).ToList();
+                ViewBag.Status = status;
+            }
             if (searchString != null)
             {
                 ViewBag.searchString = searchString.Value.ToString("yyyy-MM-dd");

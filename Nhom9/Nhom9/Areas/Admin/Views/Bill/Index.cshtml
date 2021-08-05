@@ -21,6 +21,13 @@
                 <div class="input-group">
                     <button class="input-group-text" type="submit" id="basic-addon2"><span class="fas fa-search"></span></button>
                     <input type="date" class="form-control" name="searchString" value="@ViewBag.searchString" placeholder="Search" aria-label="Search" aria-describedby="basic-addon2">
+                    <select class="form-control" name="status">
+                        <option value="">Tất cả hóa đơn</option>
+                        <option @(ViewBag.Status == 0 ? "selected" : "") value="0">Đã hủy</option>
+                        <option @(ViewBag.Status == 1 ? "selected" : "") value="1">Đang chuẩn bị</option>
+                        <option @(ViewBag.Status == 2 ? "selected" : "") value="2">Đang giao</option>
+                        <option @(ViewBag.Status == 3 ? "selected" : "") value="3">Đã thanh toán</option>
+                    </select>
                 </div>
             </form>
         </div>
