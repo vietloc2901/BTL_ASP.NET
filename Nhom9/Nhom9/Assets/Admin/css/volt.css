@@ -48658,4 +48658,10 @@ article .h6 {
 .color {
     opacity: 0;
 }
+
+.height-md {
+    display: block;
+    height: 500px;
+    overflow: scroll;
+}
 /*# sourceMappingURL=volt.css.map */

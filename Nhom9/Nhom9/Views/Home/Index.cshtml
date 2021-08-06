@@ -100,7 +100,7 @@
                                 <!-- Product Content Start -->
                                 <div class="pro-content">
                                     <div class="pro-info">
-                                        <h4><a href="@Url.Action("ProductDetail","Product")">@item.TenSP</a></h4>
+                                        <h4><a href="@Url.Action("ProductDetail","Product",new { id = item.MaSP })">@(char.ToUpper(item.TenSP[0]) + item.TenSP.Substring(1))</a></h4>
                                         <p><span class="price">@string.Format(info, "{0:c0}", item.Gia)</span></p>
                                     </div>
                                     <div class="pro-actions">

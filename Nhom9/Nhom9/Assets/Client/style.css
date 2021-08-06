@@ -700,7 +700,7 @@ span.total-pro {
     font-weight: 700;
     padding: 10px 15px;
     position: relative;
-    text-transform: capitalize;
+    text-transform: none;
     font-family: "Lato",sans-serif;
 }
 
@@ -709,7 +709,7 @@ span.total-pro {
     padding: 7px 20px;
     font-size: 14px;
     font-weight: 400;
-    text-transform: capitalize;
+    text-transform: none;
 }
 
 .header-bottom-list > li > ul.ht-dropdown li:hover a {
@@ -815,14 +815,14 @@ span.total-pro {
     background: #fff none repeat scroll 0 0;
     color: #2c2c2c;
     display: block;
-    font-size: 14px;
-    font-weight: 400;
+    font-size: 18px;
+    font-weight: 500;
     line-height: 28px;
     overflow: hidden;
     overflow-wrap: break-word;
     padding: 3.7px 20px;
     position: relative;
-    text-transform: capitalize;
+    text-transform: none;
     cursor: pointer
 }
 
@@ -1294,7 +1294,7 @@ li.megamenu-img a {
     overflow: hidden;
     padding: 0;
     text-overflow: ellipsis;
-    text-transform: capitalize;
+    text-transform: none;
     white-space: nowrap;
 }
 
@@ -1441,7 +1441,7 @@ li.megamenu-img a {
   color: #dedede;
   font-size: 20px;
   position: absolute;
-  right: 10px;
+  width: 100%;
   top: 10px;
   z-index: 9;
   opacity: 0;
@@ -2384,7 +2384,7 @@ li.megamenu-img a {
     font-size: 14px;
     line-height: 25px;
     margin-right: 5px;
-    text-transform: capitalize;
+    text-transform: none;
 }
 
 .breadcrumb-area .breadcrumb li.active a,
@@ -2470,7 +2470,7 @@ li.megamenu-img a {
     font-weight: 500;
     line-height: 1;
     margin: 0 0 15px;
-    text-transform: capitalize;
+    text-transform: none;
 }
 
 .rating i,

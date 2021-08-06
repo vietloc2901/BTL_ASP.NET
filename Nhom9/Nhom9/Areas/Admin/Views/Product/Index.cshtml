@@ -5,6 +5,7 @@
     ViewBag.Title = "Sản phẩm";
     Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
     Nhom9.Models.TaiKhoanQuanTri tk = (Nhom9.Models.TaiKhoanQuanTri)HttpContext.Current.Session[Nhom9.Session.ConstaintUser.ADMIN_SESSION];
+    var info = System.Globalization.CultureInfo.GetCultureInfo("vi-VN");
 }
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center py-4">
     <div class="d-block mb-4 mb-md-0">
@@ -30,8 +31,8 @@
         </div>
     </div>
 </div>
-<div class="card card-body border-light shadow-sm table-wrapper table-responsive table-re pt-0 product ">
-    <table class="table table-hover">
+<div class="card card-body border-light shadow-sm table-wrapper table-responsive table-re pt-0 product">
+    <table class="table table-hover   height-md">
         <thead>
             <tr>
                 <th>Tên danh mục</th>
@@ -69,7 +70,7 @@
                         <span class="font-weight-bold">@item.NguoiTao</span>
                     </td>
                     <td>
-                        <span class="font-weight-bold">@item.Gia</span>
+                        <span class="font-weight-bold">@string.Format(info, "{0:c0}", item.Gia)</span>
                     </td>
                     <td class="td-color-clothes">
                         <span class="font-weight-bold color-clothes color-clothes-second">
