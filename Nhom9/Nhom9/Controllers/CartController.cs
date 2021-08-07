@@ -33,6 +33,10 @@ namespace Nhom9.Controllers
         [HttpPost]
         public JsonResult AddToCart(ChiTietHoaDon chiTiet)
         {
+            if(chiTiet.SoLuongMua > db.SanPhamChiTiets.Where(x => x.IDCTSP == chiTiet.IDCTSP).FirstOrDefault().SoLuong)
+            {
+                return Json(new { status = false }, JsonRequestBehavior.AllowGet);
+            }
             bool isExists = false;
             List<ChiTietHoaDon> list = new List<ChiTietHoaDon>();
             if (Session[Nhom9.Session.ConstainCart.CART] != null)

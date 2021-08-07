@@ -61,16 +61,27 @@ function themVaoGioHang() {
         data: JSON.stringify({ "idctsp": idctsp, "soluongmua": soluong }),
         url: '/Cart/AddToCart',
         success: function (response) {
-            $("#product-count").html(response.length);
-            $(".close").click();
-            swal({
-                title: "Thành công!",
-                text: "Xem chi tiết tại giỏ hàng nhé <3",
-                type: "success",
-                icon: "success",
-                timer: 1500,
-                button: false
-            });
+            if (!response.status) {
+                swal({
+                    title: "Thất bại!",
+                    text: "Số lượng hàng trong kho không đủ",
+                    type: "danger",
+                    icon: "warning",
+                    timer: 1500,
+                    button: false
+                });
+            } else {
+                $("#product-count").html(response.length);
+                $(".close").click();
+                swal({
+                    title: "Thành công!",
+                    text: "Xem chi tiết tại giỏ hàng nhé <3",
+                    type: "success",
+                    icon: "success",
+                    timer: 1500,
+                    button: false
+                });
+            }
         },
         error: function (response) {
             //debugger;  

@@ -92,6 +92,7 @@ namespace Nhom9.Areas.Admin.Controllers
                 update.TenSP = sp.TenSP;
                 update.Gia = sp.Gia;
                 update.MoTa = sp.MoTa;
+                update.MaMau = sp.MaMau;
                 update.ChatLieu = sp.ChatLieu;
                 update.HuongDan = sp.HuongDan;
                 update.NgaySua = DateTime.Now;
