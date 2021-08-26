@@ -71,7 +71,7 @@ function themVaoGioHang() {
                     button: false
                 });
             } else {
-                $("#product-count").html(response.length);
+                $("#product-count").html(response.cart.length);
                 $(".close").click();
                 swal({
                     title: "Thành công!",
