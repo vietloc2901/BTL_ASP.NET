@@ -66,7 +66,7 @@ namespace Nhom9.Controllers
                 item.GiaMua = db.SanPhamChiTiets.Include("SanPham").Where(s => s.IDCTSP == item.IDCTSP).FirstOrDefault().SanPham.Gia;
             }
             Session[Nhom9.Session.ConstainCart.CART] = list;
-            return Json(list, JsonRequestBehavior.AllowGet);
+            return Json(new{status = true, cart = list}, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
